@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.rh.jupy.model.Funcionario;
+import com.rh.jupy.repository.DepartamentoRepository;
 import com.rh.jupy.repository.FuncionarioRepository;
 
 import jakarta.validation.Valid;
@@ -31,6 +32,9 @@ public class FuncionarioController {
 
 	@Autowired
 	private FuncionarioRepository funcionarioRepository;
+
+	@Autowired
+	private DepartamentoRepository departamentoRepository;
 
 	@GetMapping
 	public ResponseEntity<List<Funcionario>> getAll() {
@@ -67,15 +71,20 @@ public class FuncionarioController {
 
 	@PostMapping
 	public ResponseEntity<Funcionario> post(@Valid @RequestBody Funcionario funcionario) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioRepository.save(funcionario));
+		if (departamentoRepository.existsById(funcionario.getDepartamento().getId())) {
+			return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioRepository.save(funcionario));
+		}
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Insira um departamento válido.");
 	}
 
 	@PutMapping
 	public ResponseEntity<Funcionario> put(@Valid @RequestBody Funcionario funcionario) {
-		return funcionarioRepository.findById(funcionario.getId())
-				.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(funcionarioRepository.save(funcionario
-						)))
-				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+		if (departamentoRepository.existsById(funcionario.getDepartamento().getId())) {
+			return funcionarioRepository.findById(funcionario.getId()).map(
+					resposta -> ResponseEntity.status(HttpStatus.CREATED).body(funcionarioRepository.save(funcionario)))
+					.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+		}
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Insira um departamento válido.");
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
