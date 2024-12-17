@@ -2,7 +2,7 @@
 # Aplicativo de Sistema de RH
 [![Static Badge](https://img.shields.io/badge/-Escopo%20do%20projeto-lightgrey)](https://github.com/projetoIntegrador-aplicacaoRH/backend/blob/main/Escopo%20do%20Projeto.pdf)
 
-Projeto desenvolvido com Spring Boot, com CRUD completo que permite o gerenciamento de informações de funcionários de uma empresa pela equipe de RH.
+Projeto desenvolvido com Spring Boot, com CRUD completo, Segurança com JWT e Deploy, que permite o gerenciamento de informações de funcionários de uma empresa pela equipe de RH.
 
 
 ## Autores
