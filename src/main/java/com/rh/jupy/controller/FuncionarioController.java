@@ -36,11 +36,10 @@ public class FuncionarioController {
 	private FuncionarioRepository funcionarioRepository;
 
 	@Autowired
-  private FuncionarioService funcionarioService;
-	
-  @Autowired
-	private DepartamentoRepository departamentoRepository;
+	private FuncionarioService funcionarioService;
 
+	@Autowired
+	private DepartamentoRepository departamentoRepository;
 
 	@GetMapping
 	public ResponseEntity<List<Funcionario>> getAll() {
@@ -58,7 +57,7 @@ public class FuncionarioController {
 	public ResponseEntity<List<Funcionario>> getByNome(@PathVariable String nome) {
 
 		return ResponseEntity.ok(funcionarioRepository.findByNomeContainingIgnoreCase(nome));
-
+	}
 
 	@GetMapping("/cargo/{cargo}")
 	public ResponseEntity<List<Funcionario>> getByCargo(@PathVariable String cargo) {
@@ -74,7 +73,7 @@ public class FuncionarioController {
 	@GetMapping("/admissao/{admissao}")
 	public ResponseEntity<List<Funcionario>> getByAdmissao(@PathVariable Date admissao) {
 		return ResponseEntity.ok(funcionarioRepository.findByAdmissao(admissao));
-
+	}
 
 	@PostMapping
 	public ResponseEntity<Funcionario> post(@Valid @RequestBody Funcionario funcionario) {
@@ -102,21 +101,18 @@ public class FuncionarioController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		funcionarioRepository.deleteById(id);
 	}
-	
+
 	@GetMapping("/salariofinal/{id}")
 	public ResponseEntity<String> salarioFinal(@PathVariable Long id) {
 		Optional<Funcionario> funcionario = funcionarioRepository.findById(id);
 		if (funcionario.isEmpty())
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		
-		return ResponseEntity.ok("Nome do Funcionário: " + funcionario.get().getNome() +
-								 "\nValor Hora: R$" +  funcionario.get().getValorHora() +
-								 "\nDesconto: R$" + funcionario.get().getDesconto() +
-								 "\nBônus: R$" + funcionario.get().getBonus() +
-								 "\nHoras Trabalhadas: " + funcionario.get().getHorasTrabalhadas() +
-								 "\nCargo: " + funcionario.get().getCargo() +
-								 "\nAdmissão: " + funcionario.get().getAdmissao() +
-								 "\nO salário final é: R$" + funcionarioService.calcularSalarioFinal(funcionario.get()));
+
+		return ResponseEntity.ok("Nome do Funcionário: " + funcionario.get().getNome() + "\nValor Hora: R$"
+				+ funcionario.get().getValorHora() + "\nDesconto: R$" + funcionario.get().getDesconto() + "\nBônus: R$"
+				+ funcionario.get().getBonus() + "\nHoras Trabalhadas: " + funcionario.get().getHorasTrabalhadas()
+				+ "\nCargo: " + funcionario.get().getCargo() + "\nAdmissão: " + funcionario.get().getAdmissao()
+				+ "\nO salário final é: R$" + funcionarioService.calcularSalarioFinal(funcionario.get()));
 	}
-	
+
 }
