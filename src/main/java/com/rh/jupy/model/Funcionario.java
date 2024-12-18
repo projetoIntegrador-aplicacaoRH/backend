@@ -1,13 +1,16 @@
 package com.rh.jupy.model;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
@@ -32,11 +35,15 @@ public class Funcionario {
 	@NotNull(message = "O salário não pode ser nulo.")
 	@DecimalMin(value = "0.0", inclusive = true, message = "O salário deve ser no mínimo 0.0.")
 	@DecimalMax(value = "100000.0", inclusive = true, message = "O salário não pode ser maior que 100000.0.")
-	private float salario;
+	private BigDecimal valorHora;
 
 	@DecimalMin(value = "0.0", inclusive = true, message = "O desconto deve ser no mínimo 0.0.")
 	@DecimalMax(value = "5000.0", inclusive = true, message = "O desconto não pode ser maior que 5000.0.")
-	private float desconto;
+	private BigDecimal desconto;
+
+	@DecimalMin(value = "0.0", inclusive = true, message = "O bônus deve ser no mínimo 0.0.")
+	@DecimalMax(value = "5000.0", inclusive = true, message = "O bônus não pode ser maior que 5000.0.")
+	private BigDecimal bonus;
 
 	@NotNull(message = "As horas trabalhadas não podem ser nulas.")
 	@Min(value = 0, message = "As horas trabalhadas devem ser no mínimo 0.")
@@ -49,7 +56,15 @@ public class Funcionario {
 
 	@NotNull(message = "A data de admissão não pode ser nula.")
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date date;
+	private Date admissao;
+
+	@ManyToOne
+	@JsonIgnoreProperties("funcionarios")
+	private Usuario usuario;
+
+	@ManyToOne
+	@JsonIgnoreProperties("funcionarios")
+	private Departamento departamento;
 
 	public Long getId() {
 		return id;
@@ -67,19 +82,27 @@ public class Funcionario {
 		this.nome = nome;
 	}
 
-	public float getSalario() {
-		return salario;
+	public BigDecimal getValorHora() {
+		return valorHora;
 	}
 
-	public void setSalario(float salario) {
-		this.salario = salario;
+	public void setValorHora(BigDecimal valorHora) {
+		this.valorHora = valorHora;
 	}
 
-	public float getDesconto() {
+	public BigDecimal getBonus() {
+		return bonus;
+	}
+
+	public void setBonus(BigDecimal bonus) {
+		this.bonus = bonus;
+	}
+
+	public BigDecimal getDesconto() {
 		return desconto;
 	}
 
-	public void setDesconto(float desconto) {
+	public void setDesconto(BigDecimal desconto) {
 		this.desconto = desconto;
 	}
 
@@ -99,12 +122,28 @@ public class Funcionario {
 		this.cargo = cargo;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getAdmissao() {
+		return admissao;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setAdmissao(Date admissao) {
+		this.admissao = admissao;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
+	}
+
+	public Departamento getDepartamento() {
+		return departamento;
 	}
 
 }
