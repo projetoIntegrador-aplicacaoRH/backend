@@ -10,10 +10,13 @@ import org.springframework.stereotype.Repository;
 import com.rh.jupy.model.Funcionario;
 
 @Repository
-public interface FuncionarioRepository extends JpaRepository <Funcionario, Long>{
-	
-	public List <Funcionario> findBynomeContainingIgnoreCase(@Param("nome")String nome);
-	public List <Funcionario> findBycargoContainingIgnoreCase(@Param("cargo")String cargo);
-	public List <Funcionario> findByDate(@Param("admissao")Date date);
-	public List <Funcionario> findBysalario(@Param("salario")Float salario);
+public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {
+
+	public List<Funcionario> findBynomeContainingIgnoreCase(@Param("nome") String nome);
+
+	public List<Funcionario> findBycargoContainingIgnoreCase(@Param("cargo") String cargo);
+
+	public List<Funcionario> findByDate(@Param("admissao") Date date);
+
+	public List<Funcionario> findBysalario(@Param("salario") Float salario);
 }
