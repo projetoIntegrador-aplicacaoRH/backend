@@ -40,7 +40,7 @@ public class Funcionario {
 	@DecimalMin(value = "0.0", inclusive = true, message = "O desconto deve ser no mínimo 0.0.")
 	@DecimalMax(value = "5000.0", inclusive = true, message = "O desconto não pode ser maior que 5000.0.")
 	private BigDecimal desconto;
-	
+
 	@DecimalMin(value = "0.0", inclusive = true, message = "O bônus deve ser no mínimo 0.0.")
 	@DecimalMax(value = "5000.0", inclusive = true, message = "O bônus não pode ser maior que 5000.0.")
 	private BigDecimal bonus;
@@ -56,8 +56,7 @@ public class Funcionario {
 
 	@NotNull(message = "A data de admissão não pode ser nula.")
 	@JsonFormat(pattern = "yyyy-MM-dd")
-  private Date admissao;
-
+	private Date admissao;
 
 	@ManyToOne
 	@JsonIgnoreProperties("funcionarios")
@@ -98,7 +97,7 @@ public class Funcionario {
 	public void setBonus(BigDecimal bonus) {
 		this.bonus = bonus;
 	}
-	
+
 	public BigDecimal getDesconto() {
 		return desconto;
 	}
@@ -139,28 +138,12 @@ public class Funcionario {
 		this.usuario = usuario;
 	}
 
-	public Departamento getDepartamento() {
-		return departamento;
-	}
-
 	public void setDepartamento(Departamento departamento) {
 		this.departamento = departamento;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
 	public Departamento getDepartamento() {
 		return departamento;
-	}
-
-	public void setDepartamento(Departamento departamento) {
-		this.departamento = departamento;
 	}
 
 }
