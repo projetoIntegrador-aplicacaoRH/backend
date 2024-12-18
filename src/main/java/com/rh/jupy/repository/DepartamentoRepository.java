@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.rh.jupy.model.Departamento;
 
 @Repository
-public interface DepartamentoRepository  extends JpaRepository<Departamento,Long>{
+public interface DepartamentoRepository extends JpaRepository<Departamento, Long> {
 
 }

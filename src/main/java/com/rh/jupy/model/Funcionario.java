@@ -4,11 +4,13 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
@@ -55,6 +57,14 @@ public class Funcionario {
 	@NotNull(message = "A data de admissão não pode ser nula.")
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date admissao;
+
+	@ManyToOne
+	@JsonIgnoreProperties("funcionarios")
+	private Usuario usuario;
+
+	@ManyToOne
+	@JsonIgnoreProperties("funcionarios")
+	private Departamento departamento;
 
 	public Long getId() {
 		return id;
@@ -118,6 +128,22 @@ public class Funcionario {
 
 	public void setAdmissao(Date admissao) {
 		this.admissao = admissao;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
 	}
 
 }

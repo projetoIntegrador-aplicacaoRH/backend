@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.rh.jupy.model.Funcionario;
+import com.rh.jupy.repository.DepartamentoRepository;
 import com.rh.jupy.repository.FuncionarioRepository;
 import com.rh.jupy.service.FuncionarioService;
 
@@ -35,8 +36,12 @@ public class FuncionarioController {
 	private FuncionarioRepository funcionarioRepository;
 
 	@Autowired
-	private FuncionarioService funcionarioService;
+  private FuncionarioService funcionarioService;
 	
+  @Autowired
+	private DepartamentoRepository departamentoRepository;
+
+
 	@GetMapping
 	public ResponseEntity<List<Funcionario>> getAll() {
 		return ResponseEntity.ok(funcionarioRepository.findAll());
@@ -51,11 +56,13 @@ public class FuncionarioController {
 
 	@GetMapping("/nome/{nome}")
 	public ResponseEntity<List<Funcionario>> getByNome(@PathVariable String nome) {
+
 		return ResponseEntity.ok(funcionarioRepository.findByNomeContainingIgnoreCase(nome));
-	}
+
 
 	@GetMapping("/cargo/{cargo}")
 	public ResponseEntity<List<Funcionario>> getByCargo(@PathVariable String cargo) {
+
 		return ResponseEntity.ok(funcionarioRepository.findByCargoContainingIgnoreCase(cargo));
 	}
 
@@ -67,19 +74,24 @@ public class FuncionarioController {
 	@GetMapping("/admissao/{admissao}")
 	public ResponseEntity<List<Funcionario>> getByAdmissao(@PathVariable Date admissao) {
 		return ResponseEntity.ok(funcionarioRepository.findByAdmissao(admissao));
-	}
+
 
 	@PostMapping
 	public ResponseEntity<Funcionario> post(@Valid @RequestBody Funcionario funcionario) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioRepository.save(funcionario));
+		if (departamentoRepository.existsById(funcionario.getDepartamento().getId())) {
+			return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioRepository.save(funcionario));
+		}
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Insira um departamento válido.");
 	}
 
 	@PutMapping
 	public ResponseEntity<Funcionario> put(@Valid @RequestBody Funcionario funcionario) {
-		return funcionarioRepository.findById(funcionario.getId())
-				.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(funcionarioRepository.save(funcionario
-						)))
-				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+		if (departamentoRepository.existsById(funcionario.getDepartamento().getId())) {
+			return funcionarioRepository.findById(funcionario.getId()).map(
+					resposta -> ResponseEntity.status(HttpStatus.CREATED).body(funcionarioRepository.save(funcionario)))
+					.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+		}
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Insira um departamento válido.");
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
