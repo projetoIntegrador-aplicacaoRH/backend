@@ -1,5 +1,6 @@
 package com.rh.jupy.controller;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.rh.jupy.model.Funcionario;
 import com.rh.jupy.repository.FuncionarioRepository;
+import com.rh.jupy.service.FuncionarioService;
 
 import jakarta.validation.Valid;
 
@@ -32,6 +34,9 @@ public class FuncionarioController {
 	@Autowired
 	private FuncionarioRepository funcionarioRepository;
 
+	@Autowired
+	private FuncionarioService funcionarioService;
+	
 	@GetMapping
 	public ResponseEntity<List<Funcionario>> getAll() {
 		return ResponseEntity.ok(funcionarioRepository.findAll());
@@ -45,24 +50,23 @@ public class FuncionarioController {
 	}
 
 	@GetMapping("/nome/{nome}")
-	public ResponseEntity<List<Funcionario>> getBynome(@PathVariable String nome) {
-		return ResponseEntity.ok(funcionarioRepository.findBynomeContainingIgnoreCase(nome));
+	public ResponseEntity<List<Funcionario>> getByNome(@PathVariable String nome) {
+		return ResponseEntity.ok(funcionarioRepository.findByNomeContainingIgnoreCase(nome));
 	}
 
 	@GetMapping("/cargo/{cargo}")
-	public ResponseEntity<List<Funcionario>> getBycargo(@PathVariable String cargo) {
-		return ResponseEntity.ok(funcionarioRepository.findBycargoContainingIgnoreCase(cargo));
+	public ResponseEntity<List<Funcionario>> getByCargo(@PathVariable String cargo) {
+		return ResponseEntity.ok(funcionarioRepository.findByCargoContainingIgnoreCase(cargo));
 	}
 
 	@GetMapping("/salario/{salario}")
-	public ResponseEntity<List<Funcionario>> getBysalario(@PathVariable Float salario) {
-		return ResponseEntity.ok(funcionarioRepository.findBysalario(salario));
+	public ResponseEntity<List<Funcionario>> getByValorHora(@PathVariable BigDecimal valorHora) {
+		return ResponseEntity.ok(funcionarioRepository.findByValorHora(valorHora));
 	}
 
-	@GetMapping("/date/{date}")
-	public ResponseEntity<List<Funcionario>> getBydate(@PathVariable Date date) {
-		return ResponseEntity.ok(funcionarioRepository.findByDate(date));
-
+	@GetMapping("/admissao/{admissao}")
+	public ResponseEntity<List<Funcionario>> getByAdmissao(@PathVariable Date admissao) {
+		return ResponseEntity.ok(funcionarioRepository.findByAdmissao(admissao));
 	}
 
 	@PostMapping
@@ -86,4 +90,21 @@ public class FuncionarioController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		funcionarioRepository.deleteById(id);
 	}
+	
+	@GetMapping("/salariofinal/{id}")
+	public ResponseEntity<String> salarioFinal(@PathVariable Long id) {
+		Optional<Funcionario> funcionario = funcionarioRepository.findById(id);
+		if (funcionario.isEmpty())
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		
+		return ResponseEntity.ok("Nome do Funcionário: " + funcionario.get().getNome() +
+								 "\nValor Hora: R$" +  funcionario.get().getValorHora() +
+								 "\nDesconto: R$" + funcionario.get().getDesconto() +
+								 "\nBônus: R$" + funcionario.get().getBonus() +
+								 "\nHoras Trabalhadas: " + funcionario.get().getHorasTrabalhadas() +
+								 "\nCargo: " + funcionario.get().getCargo() +
+								 "\nAdmissão: " + funcionario.get().getAdmissao() +
+								 "\nO salário final é: R$" + funcionarioService.calcularSalarioFinal(funcionario.get()));
+	}
+	
 }
