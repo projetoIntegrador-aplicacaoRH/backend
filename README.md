@@ -1,8 +1,9 @@
 
 # JUPY - Aplicativo de Sistema de RH
-[Escopo](https://github.com/projetoIntegrador-aplicacaoRH/backend/blob/main/Escopo%20do%20Projeto.pdf)  |
+[Escopo](https://github.com/projetoIntegrador-aplicacaoRH/backend/raw/refs/heads/main/documentacao/Escopo%20do%20Projeto%20-%20TASK3.docx)  |
 [Camada Controller](https://raw.githubusercontent.com/projetoIntegrador-aplicacaoRH/backend/refs/heads/main/documentacao/diagramaCamadaController.png)  |
 [Camada Repository](https://raw.githubusercontent.com/projetoIntegrador-aplicacaoRH/backend/refs/heads/main/documentacao/diagramaCamadaRepository.png)  |
+[JSON](https://github.com/projetoIntegrador-aplicacaoRH/backend/blob/main/documentacao/requisisoesJSON)
 [Endpoints](https://github.com/projetoIntegrador-aplicacaoRH/backend/blob/main/documentacao/Api%20RH.pdf)<br><br>
 Projeto desenvolvido com Spring Boot, com CRUD completo, Segurança com JWT e Deploy, que permite o gerenciamento de informações de funcionários de uma empresa pela equipe de RH.
 
