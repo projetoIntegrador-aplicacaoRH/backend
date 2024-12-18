@@ -49,22 +49,22 @@ public class FuncionarioController {
 	}
 
 	@GetMapping("/nome/{nome}")
-	public ResponseEntity<List<Funcionario>> getBynome(@PathVariable String nome) {
+	public ResponseEntity<List<Funcionario>> getByNome(@PathVariable String nome) {
 		return ResponseEntity.ok(funcionarioRepository.findBynomeContainingIgnoreCase(nome));
 	}
 
 	@GetMapping("/cargo/{cargo}")
-	public ResponseEntity<List<Funcionario>> getBycargo(@PathVariable String cargo) {
+	public ResponseEntity<List<Funcionario>> getByCargo(@PathVariable String cargo) {
 		return ResponseEntity.ok(funcionarioRepository.findBycargoContainingIgnoreCase(cargo));
 	}
 
 	@GetMapping("/salario/{salario}")
-	public ResponseEntity<List<Funcionario>> getBysalario(@PathVariable Float salario) {
+	public ResponseEntity<List<Funcionario>> getBySalario(@PathVariable Float salario) {
 		return ResponseEntity.ok(funcionarioRepository.findBysalario(salario));
 	}
 
 	@GetMapping("/date/{date}")
-	public ResponseEntity<List<Funcionario>> getBydate(@PathVariable Date date) {
+	public ResponseEntity<List<Funcionario>> getByDate(@PathVariable Date date) {
 		return ResponseEntity.ok(funcionarioRepository.findByDate(date));
 
 	}
