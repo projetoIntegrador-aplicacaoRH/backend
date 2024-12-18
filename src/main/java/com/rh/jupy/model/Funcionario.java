@@ -56,7 +56,8 @@ public class Funcionario {
 
 	@NotNull(message = "A data de admissão não pode ser nula.")
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date admissao;
+  private Date admissao;
+
 
 	@ManyToOne
 	@JsonIgnoreProperties("funcionarios")
@@ -128,6 +129,22 @@ public class Funcionario {
 
 	public void setAdmissao(Date admissao) {
 		this.admissao = admissao;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
 	}
 
 	public Usuario getUsuario() {

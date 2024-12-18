@@ -22,7 +22,7 @@ public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	@NotBlank(message = "O atributo 'nome' deve ser preenchido.")
 	@Size(max = 255, message = "O atributo 'nome' deve conter no máximo 255 caracteres.")
@@ -39,15 +39,26 @@ public class Usuario {
 	@NotBlank(message = " O atributo 'senha' deve ser preenchido.")
 	private String senha;
 
+
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
 	private List<Funcionario> funcionarios;
+	
+	public Usuario(Long id, String nome, String usuario, String senha, String foto) {
+		this.id = id;
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.foto = foto;
+	}
 
-	public long getId() {
+	public Long getId() {
+
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -37,7 +37,7 @@ public class UsuarioController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> getById(@PathVariable long id) {
+	public ResponseEntity<Usuario> getById(@PathVariable Long id) {
 		return usuarioRepository.findById(id).map(usuario -> ResponseEntity.ok(usuario))
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
@@ -46,6 +46,8 @@ public class UsuarioController {
 	public ResponseEntity<Usuario> post(@Valid @RequestBody Usuario usuario) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioRepository.save(usuario));
 	}
+	
+	
 
 	@PutMapping
 	public ResponseEntity<Usuario> put(@Valid @RequestBody Usuario usuario) {
@@ -56,7 +58,7 @@ public class UsuarioController {
 
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable long id) {
+	public void delete(@PathVariable Long id) {
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
 		if (usuario.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
