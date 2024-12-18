@@ -39,6 +39,7 @@ public class Usuario {
 	@NotBlank(message = " O atributo 'senha' deve ser preenchido.")
 	private String senha;
 
+
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
@@ -53,6 +54,7 @@ public class Usuario {
 	}
 
 	public Long getId() {
+
 		return id;
 	}
 
@@ -99,7 +101,5 @@ public class Usuario {
 	public void setFuncionarios(List<Funcionario> funcionarios) {
 		this.funcionarios = funcionarios;
 	}
-	
-	
 
 }

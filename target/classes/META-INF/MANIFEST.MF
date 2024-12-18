@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
+
 Build-Jdk-Spec: 21
 Implementation-Title: jupy
 Implementation-Version: 0.0.1-SNAPSHOT
