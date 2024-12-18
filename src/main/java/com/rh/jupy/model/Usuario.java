@@ -52,6 +52,8 @@ public class Usuario {
 		this.senha = senha;
 		this.foto = foto;
 	}
+	
+	public Usuario () {}
 
 	public Long getId() {
 
